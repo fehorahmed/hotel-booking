@@ -25,7 +25,22 @@ return new class extends Migration
             $table->string('father_name')->nullable();
             $table->string('nid')->nullable();
             $table->string('nid_image')->nullable();
+            $table->enum('job_type',['GOVT','PRIVATE'])->nullable();
 
+            $table->foreignId('present_division_id')->nullable();
+            $table->foreignId('present_district_id')->nullable();
+            $table->foreignId('present_sub_district_id')->nullable();
+            $table->string('present_address')->nullable();
+
+            $table->foreignId('permanent_division_id')->nullable();
+            $table->foreignId('permanent_district_id')->nullable();
+            $table->foreignId('permanent_sub_district_id')->nullable();
+            $table->string('permanent_address')->nullable();
+
+            $table->foreignId('office_division_id')->nullable();
+            $table->foreignId('office_district_id')->nullable();
+            $table->foreignId('office_sub_district_id')->nullable();
+            $table->string('office_address')->nullable();
 
 
             $table->timestamps();
