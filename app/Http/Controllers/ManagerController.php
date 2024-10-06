@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRegistrationRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\ManagerResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller
+class ManagerController extends Controller
 {
     public function apiLogin(Request $request)
     {
@@ -30,8 +29,8 @@ class UserController extends Controller
         }
 
         if (
-            !Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 1])
-            && !Auth::attempt(['phone' => $request->email, 'password' => $request->password, 'role' => 1])
+            !Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 2])
+            && !Auth::attempt(['phone' => $request->email, 'password' => $request->password, 'role' => 2])
         ) {
 
             return response([
@@ -39,10 +38,10 @@ class UserController extends Controller
                 'message' => "Email or password dose not match.",
             ]);
         } else {
-            $token = $request->user()->createToken('admin-access-token', ['user'])->plainTextToken;
+            $token = $request->user()->createToken('admin-access-token', ['manager'])->plainTextToken;
             return response()->json([
                 'status' => true,
-                'user' => new UserResource($request->user()),
+                'user' => new ManagerResource($request->user()),
                 'token' => $token
             ]);
         }
@@ -50,14 +49,8 @@ class UserController extends Controller
     public function profile(Request $request){
         return response()->json([
             'status' => true,
-            'user' => new UserResource($request->user()),
+            'user' => new ManagerResource($request->user()),
             // 'token' => $token
         ]);
-    }
-
-
-    public function apiRegistration(UserRegistrationRequest $request){
-        $validatedData = $request->validated();
-        dd($request->all());
     }
 }

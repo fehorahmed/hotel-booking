@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRegistrationRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\AdminResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller
+class AdminController extends Controller
 {
     public function apiLogin(Request $request)
     {
@@ -28,10 +27,16 @@ class UserController extends Controller
                 'message' => $validation->messages()->first(),
             ]);
         }
+        // if (Auth::attempt($credentials)) {
+        //     $token = $request->user()->createToken('user-access-token')->plainTextToken;
+        //     return response()->json(['token' => $token]);
+        // } else {
+        //     return response()->json(['message' => 'Unauthorized'], 401);
+        // }
 
         if (
-            !Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 1])
-            && !Auth::attempt(['phone' => $request->email, 'password' => $request->password, 'role' => 1])
+            !Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 3])
+            && !Auth::attempt(['phone' => $request->email, 'password' => $request->password, 'role' => 3])
         ) {
 
             return response([
@@ -39,10 +44,10 @@ class UserController extends Controller
                 'message' => "Email or password dose not match.",
             ]);
         } else {
-            $token = $request->user()->createToken('admin-access-token', ['user'])->plainTextToken;
+            $token = $request->user()->createToken('admin-access-token', ['admin'])->plainTextToken;
             return response()->json([
                 'status' => true,
-                'user' => new UserResource($request->user()),
+                'user' => new AdminResource($request->user()),
                 'token' => $token
             ]);
         }
@@ -50,14 +55,8 @@ class UserController extends Controller
     public function profile(Request $request){
         return response()->json([
             'status' => true,
-            'user' => new UserResource($request->user()),
+            'user' => new AdminResource($request->user()),
             // 'token' => $token
         ]);
-    }
-
-
-    public function apiRegistration(UserRegistrationRequest $request){
-        $validatedData = $request->validated();
-        dd($request->all());
     }
 }

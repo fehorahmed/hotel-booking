@@ -20,6 +20,14 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->unsignedTinyInteger('role')->default(1)->comment('1=User,2=Manager,3=Admin');
+
+
+            $table->string('father_name')->nullable();
+            $table->string('nid')->nullable();
+            $table->string('nid_image')->nullable();
+
+
+
             $table->timestamps();
         });
 
