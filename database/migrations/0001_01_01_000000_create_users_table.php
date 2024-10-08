@@ -43,6 +43,9 @@ return new class extends Migration
             $table->string('office_address')->nullable();
 
 
+            $table->boolean('status')->default(1);
+
+
             $table->timestamps();
         });
 

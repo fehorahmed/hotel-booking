@@ -21,7 +21,7 @@ class UserRegistrationRequest extends FormRequest
        // $errors = $validator->errors()->toArray();
 
         throw new HttpResponseException(response()->json([
-            'status' => 'error',
+            'status' => false,
             'message' => $validator->errors()->first(),
             'errors' => $validator->errors()
         ], 422));

@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\SubDistrictController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,4 +54,14 @@ Route::middleware('auth:sanctum', 'ability:user', 'throttle:1000,1')->group(func
     Route::prefix('user')->group(function () {
         Route::get('profile', [AdminController::class, 'profile']);
     });
+});
+
+
+/*******************************
+Common API
+******************************* */
+Route::prefix('common')->group(function () {
+    Route::get('get-division', [DivisionController::class, 'apiGetDivision']);
+    Route::get('get-district', [DistrictController::class, 'apiGetDistrict']);
+    Route::get('get-sub-district', [SubDistrictController::class, 'apiGetSubDistrict']);
 });

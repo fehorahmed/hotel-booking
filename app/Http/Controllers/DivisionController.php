@@ -62,4 +62,12 @@ class DivisionController extends Controller
     {
         //
     }
+
+    public function apiGetDivision()
+    {
+        $divisions = Division::all();
+        return response([
+            'divisions'=>$divisions
+        ]);
+    }
 }
