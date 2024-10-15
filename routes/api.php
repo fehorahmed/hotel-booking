@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\SubDistrictController;
 use App\Http\Controllers\UserController;
@@ -26,6 +27,11 @@ Route::post('admin/login', [AdminController::class, 'apiLogin']);
 Route::middleware('auth:sanctum', 'ability:admin', 'throttle:1000,1')->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('profile', [AdminController::class, 'profile']);
+
+        Route::prefix('hotel')->group(function () {
+            Route::get('index', [HotelController::class, 'index']);
+            Route::get('create', [HotelController::class, 'create']);
+        });
     });
 });
 
