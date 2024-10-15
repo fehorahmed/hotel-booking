@@ -18,8 +18,6 @@ return new class extends Migration
             $table->foreignId('hotel_id');
             $table->foreign('hotel_id')->on('hotels')->references('id');
             $table->timestamps();
-
-
             $table->unique(['name', 'hotel_id']);
         });
     }
