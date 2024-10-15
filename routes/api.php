@@ -30,7 +30,9 @@ Route::middleware('auth:sanctum', 'ability:admin', 'throttle:1000,1')->group(fun
 
         Route::prefix('hotel')->group(function () {
             Route::get('index', [HotelController::class, 'index']);
-            Route::get('create', [HotelController::class, 'create']);
+            Route::post('create', [HotelController::class, 'create']);
+            Route::get('edit/{hotel}', [HotelController::class, 'edit']);
+            Route::post('update/{hotel}', [HotelController::class, 'update']);
         });
     });
 });
@@ -66,8 +68,14 @@ Route::middleware('auth:sanctum', 'ability:user', 'throttle:1000,1')->group(func
 /*******************************
 Common API
 ******************************* */
-Route::prefix('common')->group(function () {
+Route::prefix('common')->middleware('throttle:1000,1')->group(function () {
     Route::get('get-division', [DivisionController::class, 'apiGetDivision']);
     Route::get('get-district', [DistrictController::class, 'apiGetDistrict']);
     Route::get('get-sub-district', [SubDistrictController::class, 'apiGetSubDistrict']);
+
+
+
+    Route::get('get-hotels', [HotelController::class, 'apiGetHotels']);
+
+
 });

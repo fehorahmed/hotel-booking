@@ -21,6 +21,9 @@ return new class extends Migration
             $table->boolean('status')->default(1);
             $table->foreignId('created_by');
             $table->foreign('created_by')->on('users')->references('id');
+            $table->foreign('division_id')->on('divisions')->references('id');
+            $table->foreign('district_id')->on('districts')->references('id');
+            $table->foreign('sub_district_id')->on('sub_districts')->references('id');
             $table->timestamps();
         });
     }
