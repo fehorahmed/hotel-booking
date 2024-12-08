@@ -6,6 +6,7 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\RoomCategoryController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SubDistrictController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -40,6 +41,12 @@ Route::middleware('auth:sanctum', 'ability:admin', 'throttle:1000,1')->group(fun
             Route::post('create', [RoomCategoryController::class, 'create']);
             Route::get('edit/{roomCategory}', [RoomCategoryController::class, 'edit']);
             Route::post('update/{roomCategory}', [RoomCategoryController::class, 'update']);
+        });
+        Route::prefix('room')->group(function () {
+            Route::get('index', [RoomController::class, 'index']);
+            Route::post('create', [RoomController::class, 'create']);
+            Route::get('edit/{roomCategory}', [RoomController::class, 'edit']);
+            Route::post('update/{roomCategory}', [RoomController::class, 'update']);
         });
     });
 });
