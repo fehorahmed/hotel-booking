@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->foreignId('hotel_id');
+            $table->foreignId('room_category_id');
+
+            $table->boolean('is_special')->default(0);
+            $table->boolean('status')->default(1);
+
+            $table->foreign('hotel_id')->on('hotels')->references('id');
+            $table->foreign('room_category_id')->on('room_categories')->references('id');
             $table->timestamps();
         });
     }
