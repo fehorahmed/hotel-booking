@@ -13,8 +13,10 @@ class RoomCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
+
         return response([
             'status' => true,
             'datas' => RoomCategoryResource::collection(RoomCategory::all())

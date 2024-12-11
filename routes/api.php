@@ -44,9 +44,9 @@ Route::middleware('auth:sanctum', 'ability:admin', 'throttle:1000,1')->group(fun
         });
         Route::prefix('room')->group(function () {
             Route::get('index', [RoomController::class, 'index']);
-            Route::post('create', [RoomController::class, 'create']);
-            Route::get('edit/{roomCategory}', [RoomController::class, 'edit']);
-            Route::post('update/{roomCategory}', [RoomController::class, 'update']);
+            Route::post('create', [RoomController::class, 'store']);
+            Route::get('edit/{room}', [RoomController::class, 'edit']);
+            Route::post('update/{room}', [RoomController::class, 'update']);
         });
     });
 });
