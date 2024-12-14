@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+use App\Models\BookingStatusDetail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
-class OrderController extends Controller
+class BookingStatusDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,27 +28,13 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'rooms' => 'required|array',
-            'rooms.*.id' => 'required|numeric',
-
-        ];
-
-        $validation = Validator::make($request->all(), $rules);
-        if ($validation->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => $validation->errors()->first(),
-                'errors' => $validation->errors()
-            ], 422);
-        }
-        dd($request->all());
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show(BookingStatusDetail $bookingStatusDetail)
     {
         //
     }
@@ -57,7 +42,7 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Order $order)
+    public function edit(BookingStatusDetail $bookingStatusDetail)
     {
         //
     }
@@ -65,7 +50,7 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, BookingStatusDetail $bookingStatusDetail)
     {
         //
     }
@@ -73,7 +58,7 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function destroy(BookingStatusDetail $bookingStatusDetail)
     {
         //
     }

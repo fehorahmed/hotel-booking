@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('url');
             $table->foreignId('division_id')->nullable();
             $table->foreignId('district_id')->nullable();
             $table->foreignId('sub_district_id')->nullable();

@@ -7,6 +7,7 @@ use App\Http\Resources\HotelResource;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class HotelController extends Controller
 {
@@ -22,7 +23,7 @@ class HotelController extends Controller
         // }
 
         return HotelResource::collection(Hotel::orderBy('id', 'DESC')
-             ->orderBy('id', 'DESC')
+            ->orderBy('id', 'DESC')
             ->get());
     }
 
@@ -33,6 +34,12 @@ class HotelController extends Controller
     {
         $hotel = new Hotel();
         $hotel->name = $request->name;
+        $findUrl = $hotel->where('url', '=', Str::slug($request->name, '-'))->count();
+        if ($findUrl == 0) {
+            $hotel->url = Str::slug($request->name, '-');
+        } else {
+            $hotel->url = Str::slug($request->name . ' ' . rand(00, 99), '-');
+        }
         $hotel->division_id = $request->division_id;
         $hotel->district_id = $request->district_id;
         $hotel->sub_district_id = $request->sub_district_id;
@@ -74,18 +81,17 @@ class HotelController extends Controller
     public function edit($hotel)
     {
         $hotel = Hotel::find($hotel);
-        if($hotel){
+        if ($hotel) {
             return response()->json([
-                'status'=>true,
-                'data'=> new HotelResource($hotel)
-             ]);
-        }else{
+                'status' => true,
+                'data' => new HotelResource($hotel)
+            ]);
+        } else {
             return response()->json([
-               'status'=>false,
-               'message' => 'Hotel not found.'
-             ]);
+                'status' => false,
+                'message' => 'Hotel not found.'
+            ]);
         }
-
     }
 
     /**
@@ -113,14 +119,13 @@ class HotelController extends Controller
                 'message' => 'Something went wrong.!',
             ]);
         }
-
     }
 
 
     public function apiGetHotels(Hotel $hotel)
     {
-        return HotelResource::collection(Hotel::orderBy('id', 'DESC')
-             ->orderBy('id', 'DESC')
+        return HotelResource::collection(Hotel::where('status', 1)
+            ->orderBy('id', 'DESC')
             ->get());
     }
 }

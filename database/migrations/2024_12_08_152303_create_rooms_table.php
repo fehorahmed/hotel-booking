@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->boolean('is_special')->default(0);
             $table->boolean('status')->default(1);
+            // $table->enum('booking_status',['BOOKED','AVAILABLE'])->default('AVAILABLE');
 
             $table->foreignId('created_by');
             $table->foreignId('updated_by')->nullable();

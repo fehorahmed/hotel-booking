@@ -35,7 +35,7 @@ class HotelCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => 'required|string|max:255',
+            "name" => 'required|string|max:255|unique:hotels,name',
             "division_id" => 'required|numeric',
             "district_id" => 'required|numeric',
             "sub_district_id" => 'required|numeric',

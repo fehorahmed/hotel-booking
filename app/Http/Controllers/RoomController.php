@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RoomResource;
+use App\Models\Hotel;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -209,5 +210,24 @@ class RoomController extends Controller
     public function destroy(Room $room)
     {
         //
+    }
+    public function apiGetRooms($hotel)
+    {
+        $ck_hotel = Hotel::where('url',$hotel)->first();
+        if($ck_hotel){
+
+            $rooms = Room::where('hotel_id',$ck_hotel->id)->get();
+
+            return response()->json([
+                'status' => true,
+                'datas' => RoomResource::collection($rooms),
+            ],404);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Hotel not found.',
+            ],404);
+        }
+
     }
 }
