@@ -77,9 +77,8 @@ Route::middleware('auth:sanctum', 'ability:user', 'throttle:1000,1')->group(func
     Route::prefix('user')->group(function () {
         Route::get('profile', [AdminController::class, 'profile']);
 
-        Route::prefix('booking')->group(function () {
-            Route::post('store', [OrderController::class, 'store']);
-        });
+
+        Route::post('booking-store', [OrderController::class, 'store']);
     });
 });
 

@@ -17,11 +17,12 @@ return new class extends Migration
             $table->dateTime('date');
             $table->date('from');
             $table->date('to');
-            $table->enum('order_type',['GOVT','NONGOVT']);
+            $table->enum('order_type',['GOVT','PRIVATE']);
 
             $table->float('discount',8,2)->default(0);
             $table->float('total',8,2)->default(0);
 
+            $table->string('remark')->nullable();
             $table->foreignId('created_by');
             $table->foreignId('updated_by')->nullable();
             $table->foreign('user_id')->on('users')->references('id');

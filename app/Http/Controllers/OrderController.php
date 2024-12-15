@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,7 +33,9 @@ class OrderController extends Controller
         $rules = [
             'rooms' => 'required|array',
             'rooms.*.id' => 'required|numeric',
-
+            'remark' => 'nullable|string|max:255',
+            'from' => 'required|date',
+            'to' => 'required|date',
         ];
 
         $validation = Validator::make($request->all(), $rules);
@@ -43,7 +46,31 @@ class OrderController extends Controller
                 'errors' => $validation->errors()
             ], 422);
         }
-        dd($request->all());
+
+
+        foreach($request->rooms as $rooms){
+            $ck_room =  Room::find($rooms['id']);
+            if(!$ck_room){
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'Room not found.'
+                ],404);
+            }
+
+        }
+        dd($request->all(),auth()->user()->job_type);
+        $order = new Order();
+        $order->user_id= auth()->id();
+        $order->from= $request->from;
+        $order->to= $request->to;
+        $order->remark= $request->remark;
+
+
+
+
+
+
+
     }
 
     /**
